@@ -21,9 +21,9 @@ export class FacebookStartPage
     {
         let pathCss = "button[title='Zezwól tylko na niezbędne pliki cookie']";
         let button = await this._driver.findElement(By.css(pathCss));
-        await this._driver.wait(until.elementIsVisible(button),500);
+        await this._driver.wait(until.elementIsVisible(button));
         await button.click();
-        await this._driver.wait(async d=>(await d.findElements(By.css(pathCss))).length == 0 ,500);
+        await this._driver.wait(async d=>(await d.findElements(By.css(pathCss))).length == 0);
     }
 
     async acceptOnlyEssentialCookiesAfterLogin()
@@ -33,9 +33,9 @@ export class FacebookStartPage
         if (!isRequestToAcceptCookies) return;
         let xPath = "//span[text()='Zezwól tylko na niezbędne pliki cookie']";
         let button = await this._driver.findElement(By.xpath(xPath));
-        await this._driver.wait(until.elementIsVisible(button),500);
+        await this._driver.wait(until.elementIsVisible(button));
         await button.click();
-        await this._driver.wait(async d =>(await d.findElements(By.xpath(xPath))).length == 0, 500);
+        await this._driver.wait(async d =>(await d.findElements(By.xpath(xPath))).length == 0);
     }
 
     async login()
@@ -47,9 +47,9 @@ export class FacebookStartPage
     async enterEmail()
     {
         let idEmail = "email";
-        await this._driver.wait(async d=> (await d.findElements(By.id(idEmail))).length != 0,500)
+        await this._driver.wait(async d=> (await d.findElements(By.id(idEmail))).length != 0)
         let emailElement = await this._driver.findElement(By.id(idEmail));
-        await this._driver.wait(until.elementIsVisible(emailElement), 500);
+        await this._driver.wait(until.elementIsVisible(emailElement));
         emailElement.sendKeys(this._user.email);
     }
 
@@ -57,9 +57,9 @@ export class FacebookStartPage
     {
         let idPassword = "pass";
         let passwordElement = await this._driver.findElement(By.id(idPassword));
-        await this._driver.wait(until.elementIsVisible(passwordElement), 500);
+        await this._driver.wait(until.elementIsVisible(passwordElement));
         await passwordElement.sendKeys(this._user.password, Key.RETURN);
-        await this._driver.wait(async d=>(await d.findElements(By.id(idPassword))).length == 0, 500);
+        await this._driver.wait(async d=>(await d.findElements(By.id(idPassword))).length == 0);
     }
 
     async prepareToTestsOnUserAccount(url:string)
@@ -68,7 +68,7 @@ export class FacebookStartPage
         await this.acceptOnlyEssentialCookiesBeforeLogin();
         await this.login();
         await this.acceptOnlyEssentialCookiesAfterLogin();
-        await this._driver.wait(async d=>(await d.getCurrentUrl() == url), 500);
+        await this._driver.wait(async d=>(await d.getCurrentUrl() == url));
     }
 
     private _user: User;

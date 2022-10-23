@@ -1,18 +1,18 @@
-import {By, Key, WebElement, WebDriver, until} from "selenium-webdriver"
+import {By, Key, WebElement, WebDriver, until} from "selenium-webdriver";
 import { elementIsVisible } from "selenium-webdriver/lib/until";
 
-export async function getElementByCSS(css:string)
+export async function getElementByCSS(css:string, driver:WebDriver)
 {
-    //await this._driver.wait(async d=> (await d.findElements(By.css(css))).length != 0,500)
-    let element = await this._driver.findElement(By.css(css));
-    await this._driver.wait(until.elementIsVisible(element), 500);
+    await driver.wait(async d=> (await d.findElements(By.css(css))).length != 0,1000)
+    let element = await driver.findElement(By.css(css));
+    await driver.wait(until.elementIsVisible(element), 1000);
     return element;
 }
 
-export async function getElementByXPath(xPath:string)
+export async function getElementByXPath(xPath:string, driver:WebDriver)
 {
-    //await this._driver.wait(async d=> (await d.findElements(By.xpath(xPath))).length != 0,500)
-    let element = await this._driver.findElement(By.xpath(xPath));
-    await this._driver.wait(until.elementIsVisible(element), 500);
+    await driver.wait(async d=> (await d.findElements(By.xpath(xPath))).length != 0, 1000)
+    let element = await driver.findElement(By.xpath(xPath));
+    await driver.wait(until.elementIsVisible(element),1000);
     return element;
 }

@@ -17,15 +17,15 @@ export class FacebookWelcomePage
     async clickSearch()
     {
         let cssPath = "input[placeholder = 'Szukaj na Facebooku']";
-        await getElementByCSS(cssPath);
+        await getElementByCSS(cssPath, this._driver);
     }
 
     async enterWordInSearch(word:string)
     {
         let xPath = "input[placeholder = 'Szukaj na Facebooku']";
-        let searchElement = await getElementByXPath(xPath);
+        let searchElement = await getElementByXPath(xPath, this._driver);
         searchElement.click();
-        searchElement = await getElementByXPath(xPath);
+        searchElement = await getElementByXPath(xPath, this._driver);
         await searchElement.sendKeys(word, Key.RETURN);
     }
 
