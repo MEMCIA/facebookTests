@@ -1,5 +1,5 @@
 import {By, Key, WebElement, WebDriver, until} from "selenium-webdriver"
-import { getElementByCSS, getElementByXPath } from "../utils";
+import { clickElementWithLocator, getElement } from "../utils";
 
 export class FacebookWelcomePage
 {
@@ -16,16 +16,14 @@ export class FacebookWelcomePage
 
     async clickSearch()
     {
-        let cssPath = "input[placeholder = 'Szukaj na Facebooku']";
-        await getElementByCSS(cssPath, this._driver);
+        let locatorSearchButton = By.css("input[placeholder = 'Szukaj na Facebooku']");
+        await clickElementWithLocator(locatorSearchButton, this._driver, false);
     }
 
     async enterWordInSearch(word:string)
     {
-        let xPath = "input[placeholder = 'Szukaj na Facebooku']";
-        let searchElement = await getElementByXPath(xPath, this._driver);
-        searchElement.click();
-        searchElement = await getElementByXPath(xPath, this._driver);
+        let locatorFinder = By.xpath("//input[placeholder = 'Szukaj na Facebooku']");
+        let searchElement = await clickElementWithLocator(locatorFinder, this._driver, false);
         await searchElement.sendKeys(word, Key.RETURN);
     }
 

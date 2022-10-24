@@ -3,7 +3,7 @@ import "chromedriver";
 import {FacebookStartPage} from "../pages/facebookStartPage";
 import { FacebookWelcomePage } from "../pages/facebookWelcomePage";
 import { User } from "../user";
-import { getElementByCSS, getElementByXPath } from "../utils";
+import { clickElementWithLocator, getElement } from "../utils";
 
 describe("tests of functionality of Facebook's welcome page", function()
 {
@@ -25,11 +25,8 @@ describe("tests of functionality of Facebook's welcome page", function()
     {
         let wordToSearch = "McDonald";
         //await welcomePage.enterWordInSearch(wordToSearch);
-        let xPath = "input[placeholder = 'Szukaj na Facebooku']";
-        let searchElement = await getElementByCSS(xPath, driver);
-        await searchElement.click();
-        searchElement = await getElementByCSS(xPath, driver);
-        await searchElement.sendKeys("k", Key.RETURN);
+        await welcomePage.clickSearch();
+        await welcomePage.enterWordInSearch(wordToSearch);
         
     } )
 
