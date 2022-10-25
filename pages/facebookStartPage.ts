@@ -20,7 +20,7 @@ export class FacebookStartPage
 
     async acceptOnlyEssentialCookiesBeforeLogin()
     {
-        let locatorButtonEssentialCookiesAccept = By.css("button[title='Zezwól tylko na niezbędne pliki cookie']");
+        let locatorButtonEssentialCookiesAccept = By.css("button[data-testid='cookie-policy-manage-dialog-accept-button']");
         await clickElementWithLocator(locatorButtonEssentialCookiesAccept, this._driver, true);
     }
 

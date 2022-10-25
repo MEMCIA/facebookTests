@@ -1,7 +1,7 @@
 import {By, Key, WebElement, WebDriver, until} from "selenium-webdriver"
 import { clickElementWithLocator, enterTextInElementWithLocator, getElement } from "../utils";
 
-export class FacebookWelcomePage
+export class FacebookSearchPage
 {
 
     constructor(driver:WebDriver)
@@ -9,11 +9,12 @@ export class FacebookWelcomePage
         this._driver = driver;
     }
 
-    async open()
+    async findWordInResultHeader()
     {
-        await this._driver.get(FacebookWelcomePage.Url);
+        let locatorHeader = By.css("h1[tabindex='-1']");
+        let header = await getElement(locatorHeader, this._driver);
+        return await header.findElement(By.css("span")).getText();  
     }
 
     private _driver:WebDriver;
-    public static readonly Url = "https://www.facebook.com/?sk=welcome";
 }
