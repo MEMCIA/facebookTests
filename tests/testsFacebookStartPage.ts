@@ -35,7 +35,7 @@ describe("login test of polish facebook's site", function()
 
     after(async ()=>
     {
-        //await menuBar.logout();
-        //await driver.quit();
+        await menuBar.logout();
+        await driver.quit();
     })
 })

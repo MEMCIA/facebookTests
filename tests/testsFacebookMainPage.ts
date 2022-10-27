@@ -6,8 +6,10 @@ import { User } from "../user";
 import { expect } from "chai";
 import { FacebookMenuBar } from "../pages/facebookMenuBar";
 import { FacebookSearchPage } from "../pages/facebookSearchPage";
+import { FacebookPLMainPage } from "../pages/facebookPLMainPage";
+import { getElement, getRandomText } from "../utils";
 
-describe("tests of functionality of Facebook's search page", function()
+describe("tests of functionality of Facebook's main page", function()
 {
     let driver: WebDriver;
     let startPage: FacebookStartPage;
@@ -15,6 +17,7 @@ describe("tests of functionality of Facebook's search page", function()
     let user: User;
     let menuBar: FacebookMenuBar;
     let searchPage: FacebookSearchPage;
+    let mainPage: FacebookPLMainPage
 
     before(async ()=> 
     {
@@ -25,21 +28,23 @@ describe("tests of functionality of Facebook's search page", function()
         welcomePage = new FacebookWelcomePage(driver);
         menuBar = new FacebookMenuBar(driver);
         searchPage = new FacebookSearchPage(driver);
+        mainPage = new FacebookPLMainPage(driver);
         await startPage.prepareToTestsOnUserAccount(FacebookWelcomePage.Url);
     })
 
-    it("should shows searched word in header", async function()
-    {
-        let wordToSearch = "McDonald";
-        await menuBar.clickSearch();
-        await menuBar.enterWordInSearch(wordToSearch);
-        let wordInHeader = await searchPage.findWordInResultHeader();
-        expect(wordInHeader).to.be.equal(wordToSearch);
+    it("should appear a post with entered text", async function()
+    { 
+        await mainPage.open();
+        let postContent = getRandomText(10);
+        await mainPage.makePost(postContent);
+        let postContainsText = await mainPage.checkIfPostHasCertainText(postContent);
+        expect(postContainsText).to.be.true;    
     } )
 
     after( async ()=> 
     {
-        await menuBar.logout();
-        await driver.quit();
+        mainPage.deleteAllPosts();
+        //await menuBar.logout();
+        //await driver.quit();
     })
 })

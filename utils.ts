@@ -3,10 +3,19 @@ import { elementIsVisible } from "selenium-webdriver/lib/until";
 
 export async function getElement(locator:Locator, driver:WebDriver)
 {
-    await WaitToFindElement(locator,driver);
+    await waitToFindElement(locator,driver);
     let element = await driver.findElement(locator);
     await driver.wait(until.elementIsVisible(element));
     return element;
+}
+
+export async function getElements(locator:Locator, driver:WebDriver)
+{
+    await waitToFindElement(locator,driver);
+    let elements = await driver.findElements(locator);
+    let lastElementIndex = elements.length - 1;
+    await driver.wait(until.elementIsVisible(elements[lastElementIndex]));
+    return elements;
 }
 
 export async function clickElementWithLocator(locator:Locator, driver:WebDriver, afterWaitForElementToDisappear:boolean)
@@ -53,7 +62,17 @@ export async function checkIfElementsExist(locator:Locator, driver:WebDriver)
     return elements.length != 0;
 }
 
-export async function WaitToFindElement(locator:Locator, driver:WebDriver) 
+export async function waitToFindElement(locator:Locator, driver:WebDriver) 
 {
-    await driver.wait(async ()=> checkIfElementsExist(locator, driver));   
+    await driver.wait(async ()=> await checkIfElementsExist(locator, driver));   
 }
+
+export function getRandomText(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+} 
