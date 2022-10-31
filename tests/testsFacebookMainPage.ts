@@ -7,7 +7,7 @@ import { expect } from "chai";
 import { FacebookMenuBar } from "../pages/facebookMenuBar";
 import { FacebookSearchPage } from "../pages/facebookSearchPage";
 import { FacebookPLMainPage } from "../pages/facebookPLMainPage";
-import { getElement, getRandomText } from "../utils";
+import { getElement, getRandomNumber, getRandomText } from "../utils";
 
 describe("tests of functionality of Facebook's main page", function()
 {
@@ -35,7 +35,7 @@ describe("tests of functionality of Facebook's main page", function()
     it("should appear a post with entered text", async function()
     { 
         await mainPage.open();
-        let postContent = getRandomText(10);
+        let postContent = String(getRandomNumber(10));
         await mainPage.makePost(postContent);
         let postContainsText = await mainPage.checkIfPostHasCertainText(postContent);
         expect(postContainsText).to.be.true;    

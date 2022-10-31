@@ -13,7 +13,8 @@ export async function getElements(locator:Locator, driver:WebDriver)
 {
     await waitToFindElement(locator,driver);
     let elements = await driver.findElements(locator);
-    let lastElementIndex = elements.length - 1;
+    let lastElementIndex = 0;
+    if (elements.length!=0) lastElementIndex = elements.length - 1;
     await driver.wait(until.elementIsVisible(elements[lastElementIndex]));
     return elements;
 }
@@ -67,12 +68,25 @@ export async function waitToFindElement(locator:Locator, driver:WebDriver)
     await driver.wait(async ()=> await checkIfElementsExist(locator, driver));   
 }
 
-export function getRandomText(length) {
+export function getRandomText(length:number) {
     var result           = '';
     var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
+    for ( var i = 0; i < length; i++ ) 
+    {
         result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
 } 
+
+export function getRandomNumber(length:number)
+{
+    var result= "";
+
+    for(var i = 0; i<length;i++)
+    {
+        result += Math.floor(Math.random() * 10);
+    }
+
+    return Number(result);
+}

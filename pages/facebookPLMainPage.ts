@@ -51,21 +51,24 @@ export class FacebookPLMainPage
     async findPostWithText(text:string)
     {
         let locatorPost = By.xpath("//div[text()=text]");
-        
+
     }
 
     async checkIfPostHasCertainText(text:string)
     {
         let mostCurrentPost = await this.findMostCurrentPost();
-        let locatorMostCurrentPostWithText = By.xpath("//div[text()=text]");
-        let isPostContentRight = (await mostCurrentPost.findElements(locatorMostCurrentPostWithText)).length !=0;
-        console.log(mostCurrentPost.getText()+ "text");
-        return isPostContentRight;
+        //let locatorMostCurrentPostWithText = By.xpath("//div[text()=text]");
+        //let isPostContentRight = (await mostCurrentPost.findElements(locatorMostCurrentPostWithText)).length !=0;
+        let textInPostElement = await mostCurrentPost.getText();
+        console.log(textInPostElement);
+        console.log(text);
+        return textInPostElement.includes(text);
     }
 
     async getAllPosts()
     {
         let locatorPosts = By.css("div[data-pagelet*='FeedUnit']");
+        console.log((await getElements(locatorPosts, this._driver)).length + "number of posts");
         return await getElements(locatorPosts, this._driver);
     }
 
@@ -74,30 +77,31 @@ export class FacebookPLMainPage
         let posts = await this.getAllPosts();
 
         for (const element of posts) {
-            this.deletePost(element);
+            console.log("aaa"+ await element.getText());
+            await this.deletePost(element);
         }  
     }
 
-    openPostMenu(post:WebElement)
+    async openPostMenu(post:WebElement)
     {
         let locatorPostMenu = By.css("div[aria-label='Działania dla tego posta']");
-        let postMenu = post.findElement(locatorPostMenu);
-        this._driver.wait(until.elementIsVisible(postMenu));
-        postMenu.click();  
+        let postMenu = await post.findElement(locatorPostMenu);
+        await this._driver.wait(until.elementIsVisible(postMenu));
+        await postMenu.click();  
     }
 
     async deletePost(post:WebElement)
     {
-        this.openPostMenu(post);
-        let locatorDeleteButton = By.xpath("//span[contains(text(), 'Przenieś do kosza')]");
-        clickElementWithLocator(locatorDeleteButton, this._driver, true);
-        this.confirmDelete();
+        await this.openPostMenu(post);
+        let locatorDeleteButton = By.xpath("//span[text()='Przenieś do kosza']");
+        await clickElementWithLocator(locatorDeleteButton, this._driver, true);
+        await this.confirmDelete();
     }
 
     async confirmDelete()
     {
         let locatorConfirm = By.xpath("//span[text()='Przenieś']");
-        clickElementWithLocator(locatorConfirm, this._driver, true);
+        await clickElementWithLocator(locatorConfirm, this._driver, true);
     }
 
     private _driver:WebDriver;
