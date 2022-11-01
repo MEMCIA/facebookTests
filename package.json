@@ -12,7 +12,7 @@
     "@typescript-eslint/eslint-plugin": "^5.40.0",
     "@typescript-eslint/parser": "^5.40.0",
     "chai": "^4.3.6",
-    "chromedriver": "^105.0.1",
+    "chromedriver": "^107.0.2",
     "eslint": "^8.25.0",
     "mocha": "^6.2.3",
     "selenium-webdriver": "^4.5.0",

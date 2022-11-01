@@ -34,16 +34,20 @@ describe("tests of functionality of Facebook's main page", function()
 
     it("should appear a post with entered text", async function()
     { 
-        await mainPage.open();
-        let postContent = String(getRandomNumber(10));
-        await mainPage.makePost(postContent);
-        let postContainsText = await mainPage.checkIfPostHasCertainText(postContent);
-        expect(postContainsText).to.be.true;    
+        try {
+            await mainPage.open();
+            let postContent = String(getRandomNumber(10));
+            await mainPage.makePost(postContent);
+            let isRightTextInPost = await mainPage.waitForPostWithCertainText(postContent);
+            expect(isRightTextInPost).to.be.true; 
+          } catch (error) {
+            error.should.be.null();
+          }  
     } )
 
     after( async ()=> 
     {
-        mainPage.deleteAllPosts();
+        await mainPage.deleteMostCurrentPost();
         //await menuBar.logout();
         //await driver.quit();
     })

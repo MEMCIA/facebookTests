@@ -35,10 +35,10 @@ export class FacebookPLMainPage
         await clickElementWithLocator(locatorPublishButton, this._driver, true);
     }
 
-    async makePost(text:string)
+    async makePost(content:string)
     {
         await this.clickCreatePostWindow();
-        await this.enterTextInPost(text);
+        await this.enterTextInPost(content);
         await this.clickPublish();
     }
 
@@ -48,38 +48,19 @@ export class FacebookPLMainPage
         return await getElement(locatormostCurrentPost, this._driver);
     }
 
-    async findPostWithText(text:string)
-    {
-        let locatorPost = By.xpath("//div[text()=text]");
-
-    }
-
     async checkIfPostHasCertainText(text:string)
     {
         let mostCurrentPost = await this.findMostCurrentPost();
         //let locatorMostCurrentPostWithText = By.xpath("//div[text()=text]");
         //let isPostContentRight = (await mostCurrentPost.findElements(locatorMostCurrentPostWithText)).length !=0;
         let textInPostElement = await mostCurrentPost.getText();
-        console.log(textInPostElement);
-        console.log(text);
         return textInPostElement.includes(text);
     }
 
-    async getAllPosts()
+    async waitForPostWithCertainText(text:string)
     {
-        let locatorPosts = By.css("div[data-pagelet*='FeedUnit']");
-        console.log((await getElements(locatorPosts, this._driver)).length + "number of posts");
-        return await getElements(locatorPosts, this._driver);
-    }
-
-    async deleteAllPosts()
-    {
-        let posts = await this.getAllPosts();
-
-        for (const element of posts) {
-            console.log("aaa"+ await element.getText());
-            await this.deletePost(element);
-        }  
+        await this._driver.wait(async ()=> await this.checkIfPostHasCertainText(text));
+        return true;
     }
 
     async openPostMenu(post:WebElement)
@@ -88,6 +69,12 @@ export class FacebookPLMainPage
         let postMenu = await post.findElement(locatorPostMenu);
         await this._driver.wait(until.elementIsVisible(postMenu));
         await postMenu.click();  
+    }
+
+    async deleteMostCurrentPost()
+    {
+        let mostCurrentPost = await this.findMostCurrentPost();
+        await this.deletePost(mostCurrentPost);
     }
 
     async deletePost(post:WebElement)
