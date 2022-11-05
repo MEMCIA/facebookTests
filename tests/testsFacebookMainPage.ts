@@ -48,7 +48,7 @@ describe("tests of functionality of Facebook's main page", function()
     after( async ()=> 
     {
         await mainPage.deleteMostCurrentPost();
-        //await menuBar.logout();
-        //await driver.quit();
+        await menuBar.logout();
+        await driver.quit();
     })
 })

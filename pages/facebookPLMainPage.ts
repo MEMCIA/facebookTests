@@ -17,7 +17,7 @@ export class FacebookPLMainPage
     async clickCreatePostWindow()
     {  
         let locatorPostWindow = By.xpath("//span[contains(text(), 'O czym myślisz')]");
-        await clickElementWithLocator(locatorPostWindow, this._driver, true);
+        await clickElementWithLocator(locatorPostWindow, this._driver, false);
     }
 
     async enterTextInPost(text:string)
@@ -51,8 +51,6 @@ export class FacebookPLMainPage
     async checkIfPostHasCertainText(text:string)
     {
         let mostCurrentPost = await this.findMostCurrentPost();
-        //let locatorMostCurrentPostWithText = By.xpath("//div[text()=text]");
-        //let isPostContentRight = (await mostCurrentPost.findElements(locatorMostCurrentPostWithText)).length !=0;
         let textInPostElement = await mostCurrentPost.getText();
         return textInPostElement.includes(text);
     }
