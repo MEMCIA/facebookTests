@@ -42,6 +42,7 @@ describe("tests of functionality of Facebook's main page", function()
             expect(isRightTextInPost).to.be.true; 
           } catch (error) {
             error.should.be.null();
+            console.error(error.message);
           }  
     } )
 

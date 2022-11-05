@@ -5,7 +5,6 @@ export async function getElement(locator:Locator, driver:WebDriver)
 {
     await waitToFindElement(locator,driver);
     let element = await driver.findElement(locator);
-    await driver.wait(until.elementIsVisible(element));
     return element;
 }
 
@@ -60,12 +59,15 @@ export async function checkIfUrlIsTheSame(url:string, driver:WebDriver)
 export async function checkIfElementsExist(locator:Locator, driver:WebDriver)
 {
     let elements = await driver.findElements(locator);
-    return elements.length != 0;
+    let elementExists = elements.length != 0;
+    if(!elementExists) return false;
+    let isElementDisplayed = elements.some(element => element.isDisplayed)
+    return isElementDisplayed;
 }
 
 export async function waitToFindElement(locator:Locator, driver:WebDriver) 
 {
-    await driver.wait(async ()=> await checkIfElementsExist(locator, driver));   
+    await driver.wait(async ()=> await checkIfElementsExist(locator, driver)); 
 }
 
 export function getRandomText(length:number) {
