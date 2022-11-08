@@ -7,7 +7,8 @@ import { expect } from "chai";
 import { FacebookMenuBar } from "../pages/facebookMenuBar";
 import { FacebookSearchPage } from "../pages/facebookSearchPage";
 import { FacebookPLMainPage } from "../pages/facebookPLMainPage";
-import { getElement, getRandomNumber, getRandomText } from "../utils";
+import { createDriver, getElement, getRandomNumber, getRandomText } from "../utils";
+import { Options } from "selenium-webdriver/chrome";
 
 describe("tests of functionality of Facebook's main page", function()
 {
@@ -20,10 +21,9 @@ describe("tests of functionality of Facebook's main page", function()
     let mainPage: FacebookPLMainPage
 
     before(async ()=> 
-    {
-        driver = await new Builder().forBrowser("chrome").build();
+    {   driver = await createDriver();
         //language of user should be set to polish
-        user = new User("styuurowsz_1666447403@tfbnw.net","12345T");
+        user = new User("hvzuoryjlq_1667934963@tfbnw.net","12345T");
         startPage = new FacebookStartPage(driver, user);
         welcomePage = new FacebookWelcomePage(driver);
         menuBar = new FacebookMenuBar(driver);
@@ -41,9 +41,10 @@ describe("tests of functionality of Facebook's main page", function()
             let isRightTextInPost = await mainPage.waitForPostWithCertainText(postContent);
             expect(isRightTextInPost).to.be.true; 
           } catch (error) {
-            error.should.be.null();
+            expect(error).to.be.null;
             console.error(error.message);
           }  
+          
     } )
 
     after( async ()=> 

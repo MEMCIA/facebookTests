@@ -29,9 +29,9 @@ export class FacebookStartPage
         let urlCookies = "https://www.facebook.com/privacy/consent/user_cookie_choice/?source=pft_user_cookie_choice";
         let isRequestToAcceptCookies = await checkIfUrlIsTheSame(urlCookies, this._driver);
         if (!isRequestToAcceptCookies) return;
-        
         let locatorButtonEssentialCookiesAccept = By.xpath("//span[text()='Zezwól tylko na niezbędne pliki cookie']");
         await clickElementWithLocator(locatorButtonEssentialCookiesAccept, this._driver, true);
+        await this._driver.wait(async ()=>await this._driver.getCurrentUrl() != urlCookies);
     }
 
     async login()

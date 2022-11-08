@@ -1,5 +1,5 @@
 import {By, Key, WebElement, WebDriver, until} from "selenium-webdriver"
-import { clickElementWithLocator, enterTextInElementWithLocator, getElement, getElements, waitToFindElement } from "../utils";
+import { clickElementWithLocator, sleep, enterTextInElementWithLocator, getElement } from "../utils";
 
 export class FacebookPLMainPage
 {
@@ -24,9 +24,7 @@ export class FacebookPLMainPage
     {
         let locatorPostWindowExpanded = By.css("div[aria-label*='O czym myślisz']");
         let element = await getElement(locatorPostWindowExpanded, this._driver);
-        await element
-            .findElement(By.css('p'))
-            .sendKeys(text);
+        element.sendKeys(text);
     }
 
     async clickPublish()
@@ -38,10 +36,20 @@ export class FacebookPLMainPage
     async makePost(content:string)
     {
         await this.clickCreatePostWindow();
+        await this.chooseFriendsAsPostsDefaultTargetGroup();
         await this.enterTextInPost(content);
         await this.clickPublish();
     }
 
+    async chooseFriendsAsPostsDefaultTargetGroup()
+    {
+        await sleep(5000);
+        let locatorAgree = By.xpath("//span[text() = 'Gotowe']");
+        let agreeButton = await this._driver.findElements(locatorAgree);
+        if(agreeButton.length == 0) return;
+        await clickElementWithLocator(locatorAgree, this._driver, false);
+     }
+     
     async findMostCurrentPost()
     {
         let locatormostCurrentPost = By.css("div[data-pagelet='FeedUnit_0']");

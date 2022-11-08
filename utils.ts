@@ -1,21 +1,10 @@
-import {By, Key, WebElement, WebDriver, until, Locator} from "selenium-webdriver";
-import { elementIsVisible } from "selenium-webdriver/lib/until";
+import {Builder, Key, WebElement, WebDriver, until, Locator} from "selenium-webdriver";
+import { Driver, Options } from "selenium-webdriver/chrome";
 
 export async function getElement(locator:Locator, driver:WebDriver)
 {
-    await waitToFindElement(locator,driver);
-    let element = await driver.findElement(locator);
+    let element = await driver.wait(async ()=> await checkIfElementsExist(locator, driver)); 
     return element;
-}
-
-export async function getElements(locator:Locator, driver:WebDriver)
-{
-    await waitToFindElement(locator,driver);
-    let elements = await driver.findElements(locator);
-    let lastElementIndex = 0;
-    if (elements.length!=0) lastElementIndex = elements.length - 1;
-    await driver.wait(until.elementIsVisible(elements[lastElementIndex]));
-    return elements;
 }
 
 export async function clickElementWithLocator(locator:Locator, driver:WebDriver, afterWaitForElementToDisappear:boolean)
@@ -33,6 +22,10 @@ export async function enterTextInElementWithLocator(locator:Locator, driver:WebD
     if(withReturnKey) await element.sendKeys(Key.RETURN);
     if(!afterWaitForElementToDisappear) return;
     await waitForElementToDisappear(locator, driver);
+}
+
+export function sleep(ms:number) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 export async function waitForElementToDisappear(locator:Locator, driver:WebDriver)
@@ -59,15 +52,7 @@ export async function checkIfUrlIsTheSame(url:string, driver:WebDriver)
 export async function checkIfElementsExist(locator:Locator, driver:WebDriver)
 {
     let elements = await driver.findElements(locator);
-    let elementExists = elements.length != 0;
-    if(!elementExists) return false;
-    let isElementDisplayed = elements.some(element => element.isDisplayed)
-    return isElementDisplayed;
-}
-
-export async function waitToFindElement(locator:Locator, driver:WebDriver) 
-{
-    await driver.wait(async ()=> await checkIfElementsExist(locator, driver)); 
+    return elements.find(element => element.isDisplayed);
 }
 
 export function getRandomText(length:number) {
@@ -91,4 +76,13 @@ export function getRandomNumber(length:number)
     }
 
     return Number(result);
+}
+
+export async function createDriver()
+{
+    let options = new Options();
+    //disabled to prevent site from asking permission to show notifications 
+    options.addArguments("--disable-notifications");
+    let driver = await new Builder().forBrowser("chrome").setChromeOptions(options).build();
+    return driver;
 }

@@ -6,6 +6,7 @@ import { User } from "../user";
 import { expect } from "chai";
 import { FacebookMenuBar } from "../pages/facebookMenuBar";
 import { FacebookSearchPage } from "../pages/facebookSearchPage";
+import { createDriver } from "../utils";
 
 describe("tests of functionality of Facebook's search page", function()
 {
@@ -18,7 +19,7 @@ describe("tests of functionality of Facebook's search page", function()
 
     before(async ()=> 
     {
-        driver = await new Builder().forBrowser("chrome").build();
+        driver = await createDriver();
         //language of user should be set to polish
         user = new User("styuurowsz_1666447403@tfbnw.net","12345T");
         startPage = new FacebookStartPage(driver, user);
