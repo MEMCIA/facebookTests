@@ -9,11 +9,6 @@ export class FacebookWelcomePage
         this._driver = driver;
     }
 
-    async open()
-    {
-        await this._driver.get(FacebookWelcomePage.Url);
-    }
-
     private _driver:WebDriver;
     public static readonly Url = "https://www.facebook.com/?sk=welcome";
 }
