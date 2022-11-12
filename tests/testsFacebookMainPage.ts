@@ -29,7 +29,7 @@ describe("tests of functionality of Facebook's main page", function()
         menuBar = new FacebookMenuBar(driver);
         searchPage = new FacebookSearchPage(driver);
         mainPage = new FacebookPLMainPage(driver);
-        await startPage.prepareToTestsOnUserAccount(FacebookWelcomePage.Url);
+        await startPage.prepareToTestsOnUserAccount();
     })
 
     it("should appear a post with entered text", async function()
