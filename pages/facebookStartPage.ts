@@ -52,7 +52,7 @@ export class FacebookStartPage
         await enterTextInElementWithLocator(locatorIdPassword, this._driver, this._user.password, true, true);
     }
 
-    async prepareToTestsOnUserAccount(url:string)
+    async prepareToTestsOnUserAccount()
     {
         await this.open();
         await this.acceptOnlyEssentialCookiesBeforeLogin();
