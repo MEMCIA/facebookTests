@@ -18,7 +18,7 @@ describe("tests of functionality of Facebook's main page", function()
     let user: User;
     let menuBar: FacebookMenuBar;
     let searchPage: FacebookSearchPage;
-    let mainPage: FacebookPLMainPage
+    let mainPage: FacebookPLMainPage;
 
     before(async ()=> 
     {   driver = await createDriver();
@@ -43,8 +43,7 @@ describe("tests of functionality of Facebook's main page", function()
           } catch (error) {
             expect(error).to.be.null;
             console.error(error.message);
-          }  
-          
+          }   
     } )
 
     after( async ()=> 
