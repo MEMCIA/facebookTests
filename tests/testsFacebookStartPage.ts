@@ -24,7 +24,7 @@ describe("test of log out button", function()
         user = new User("kvfguxflve_1667937336@tfbnw.net","12345T");  
         startPagePL = new FacebookStartPage(driver, user);    
         menuBar = new FacebookMenuBar(driver);
-       await startPagePL.prepareToTestsOnUserAccount(FacebookWelcomePage.Url);
+       await startPagePL.prepareToTestsOnUserAccount();
         }
     })
 
