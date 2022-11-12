@@ -9,7 +9,7 @@ import { FacebookMenuBar } from "../pages/facebookMenuBar";
 import { clickElementWithLocator, createDriver, getElement } from "../utils";
 import { FacebookLogOutPage } from "../pages/facebookLogOutPage";
 
-describe("logout test of polish facebook's site", function()
+describe("test of log out button", function()
 {
     let driver:WebDriver;
     let startPagePL: FacebookStartPage;
@@ -24,14 +24,12 @@ describe("logout test of polish facebook's site", function()
         user = new User("kvfguxflve_1667937336@tfbnw.net","12345T");  
         startPagePL = new FacebookStartPage(driver, user);    
         menuBar = new FacebookMenuBar(driver);
-        await startPagePL.open();
-        await startPagePL.acceptOnlyEssentialCookiesBeforeLogin();  
+       await startPagePL.prepareToTestsOnUserAccount(FacebookWelcomePage.Url);
+        }
     })
 
     it("after login button log out is accessible", async function()
     { 
-        await startPagePL.login();
-        await startPagePL.acceptOnlyEssentialCookiesAfterLogin();
         await menuBar.clickAccountSymbol();
         try {
             let buttonLogOut = getElement(locatorButtonLogout, driver);
