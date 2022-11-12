@@ -58,7 +58,7 @@ export class FacebookStartPage
         await this.acceptOnlyEssentialCookiesBeforeLogin();
         await this.login();
         await this.acceptOnlyEssentialCookiesAfterLogin();
-        await waitUntilUrlIsTheSame(url, this._driver);
+        if(url!="") await waitUntilUrlIsTheSame(url, this._driver);
     }
 
     private _user: User;
