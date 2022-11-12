@@ -26,7 +26,7 @@ describe("tests of functionality of Facebook's search page", function()
         welcomePage = new FacebookWelcomePage(driver);
         menuBar = new FacebookMenuBar(driver);
         searchPage = new FacebookSearchPage(driver);
-        await startPage.prepareToTestsOnUserAccount(FacebookWelcomePage.Url);
+        await startPage.prepareToTestsOnUserAccount();
     })
 
     it("should shows searched word in header", async function()
