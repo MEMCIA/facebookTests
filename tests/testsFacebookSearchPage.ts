@@ -21,7 +21,7 @@ describe("tests of functionality of Facebook's search page", function()
     {
         driver = await createDriver();
         //language of user should be set to polish
-        user = new User("styuurowsz_1666447403@tfbnw.net","12345T");
+        user = new User("email","password");
         startPage = new FacebookStartPage(driver, user);
         welcomePage = new FacebookWelcomePage(driver);
         menuBar = new FacebookMenuBar(driver);

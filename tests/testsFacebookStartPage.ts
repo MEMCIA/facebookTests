@@ -7,7 +7,6 @@ import { FacebookPLMainPage } from "../pages/facebookPLMainPage";
 import { FacebookWelcomePage } from "../pages/facebookWelcomePage";
 import { FacebookMenuBar } from "../pages/facebookMenuBar";
 import { clickElementWithLocator, createDriver, getElement } from "../utils";
-import { FacebookLogOutPage } from "../pages/facebookLogOutPage";
 
 describe("test of log out button", function()
 {
@@ -21,12 +20,11 @@ describe("test of log out button", function()
     {
         driver = await createDriver();
         //language of user should be set to polish
-        user = new User("kvfguxflve_1667937336@tfbnw.net","12345T");  
+        user = new User("email","password");  
         startPagePL = new FacebookStartPage(driver, user);    
         menuBar = new FacebookMenuBar(driver);
        await startPagePL.prepareToTestsOnUserAccount();
-        }
-    })
+        })
 
     it("after login button log out is accessible", async function()
     { 

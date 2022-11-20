@@ -23,7 +23,7 @@ describe("tests of functionality of Facebook's main page", function()
     before(async ()=> 
     {   driver = await createDriver();
         //language of user should be set to polish
-        user = new User("hvzuoryjlq_1667934963@tfbnw.net","12345T");
+        user = new User("email","password");
         startPage = new FacebookStartPage(driver, user);
         welcomePage = new FacebookWelcomePage(driver);
         menuBar = new FacebookMenuBar(driver);
